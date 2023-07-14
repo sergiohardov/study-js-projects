@@ -1,6 +1,7 @@
 const chatEl = document.querySelector("#chat");
 const formEl = document.querySelector("#messageForm");
-const ws = new WebSocket("ws://192.168.1.102:8000");
+const ws = new WebSocket("ws://192.168.1.108:8000");
+
 ws.onmessage = (message) => {
   const messages = JSON.parse(message.data);
   messages.forEach((val) => {
@@ -16,6 +17,8 @@ const send = (e) => {
   const message = document.querySelector("#message").value;
 
   ws.send(JSON.stringify({ name, message }));
+
+  document.querySelector("#message").value = "";
 };
 
 formEl.addEventListener("submit", send);
