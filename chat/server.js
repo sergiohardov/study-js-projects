@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 import { writeFile, readFileSync, existsSync } from "fs";
 
 const clients = {};
-const log = existsSync("log") && readFileSync("log");
+const log = existsSync("history.log") && readFileSync("history.log");
 const messages = JSON.parse(log) || [];
 
 const wss = new WebSocketServer({ port: 8000 });
@@ -32,7 +32,7 @@ wss.on("connection", (ws) => {
 });
 
 process.on("SIGINT", () => {
-  writeFile("log", JSON.stringify(messages), (err) => {
+  writeFile("history.log", JSON.stringify(messages), (err) => {
     if (err) {
       console.log(err);
     }
